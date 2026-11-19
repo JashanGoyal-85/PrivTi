@@ -3,366 +3,90 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Lattice PQC & PrivTI — Live Interactive Presentation Suite</title>
+  <title>PrivTI — Practical Implementation Prototype</title>
   <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
 
   <div class="app-container">
 
-    <!-- Top Academic Header -->
+    <!-- Header -->
     <header class="app-header">
-      <div class="header-left">
-        <div class="badge-row">
-          <span class="badge primary">Final Project Live Demo</span>
-          <span class="badge success">● System Active</span>
-        </div>
-        <h1>Lattice-Based Post-Quantum Cryptography & Privacy-Preserving AI</h1>
-        <p class="authors">Presented by: <strong>Jashan Goyal &bull; Nikhil Goyal &bull; Paras Bansal</strong></p>
+      <div class="brand-box">
+        <h1>🔐 PrivTI Prototype</h1>
+        <p>Practical Implementation of Privacy-Preserving Transformer Inference</p>
       </div>
-      <div class="header-right">
-        <a href="#tab-privti" class="action-btn outline" id="quick-privti-btn">⚡ Run Live AI Inference</a>
-      </div>
+      <div class="status-pill">● System Online</div>
     </header>
 
-    <!-- Navigation Tabs -->
-    <nav class="nav-tabs">
-      <button class="tab-btn active" data-tab="tab-scope1">
-        <span class="tab-icon">🔬</span>
-        <div class="tab-text">
-          <span class="tab-title">Future Scope 1</span>
-          <span class="tab-desc">N-Dim Babai CVP Benchmarking</span>
-        </div>
-      </button>
+    <!-- What it is doing (3 Easy Cards) -->
+    <section class="how-it-works-grid">
+      <div class="how-card">
+        <div class="step-circle">1</div>
+        <h3>Client Encrypts</h3>
+        <p>Your input text is encoded into BFV encrypted polynomial slots on your device before transmission.</p>
+      </div>
 
-      <button class="tab-btn" data-tab="tab-scope2">
-        <span class="tab-icon">🤖</span>
-        <div class="tab-text">
-          <span class="tab-title">Future Scope 2</span>
-          <span class="tab-desc">Deep Learning & LWE Stress-Test</span>
-        </div>
-      </button>
+      <div class="how-card">
+        <div class="step-circle">2</div>
+        <h3>Server Runs AI Blindly</h3>
+        <p>The cloud model computes matrix multiplications directly over ciphertexts without ever decrypting.</p>
+      </div>
 
-      <button class="tab-btn" data-tab="tab-privti">
-        <span class="tab-icon">🔐</span>
-        <div class="tab-text">
-          <span class="tab-title">PrivTI Prototype</span>
-          <span class="tab-desc">Encrypted Transformer Inference</span>
-        </div>
-      </button>
-    </nav>
-
-    <!-- ======================================================================
-         TAB 1: FUTURE SCOPE 1 (N-DIMENSIONAL BABAI CVP)
-         ====================================================================== -->
-    <section id="tab-scope1" class="tab-content active">
-      <div class="section-card">
-        <div class="card-header">
-          <div>
-            <h2>🔬 Scope 1: $N$-Dimensional Babai CVP vs. Orthogonality Defect</h2>
-            <p class="desc">Empirically test how Babai's rounding error explodes when basis vectors become skewed in higher dimensions.</p>
-          </div>
-          <span class="tag">Colab Verified (Gap A)</span>
-        </div>
-
-        <!-- Controls Grid -->
-        <div class="controls-grid">
-          <div class="control-box">
-            <label class="control-label">Select Lattice Dimension ($n$):</label>
-            <div class="pill-group" id="dim-pills">
-              <button class="pill active" data-dim="2">n = 2</button>
-              <button class="pill" data-dim="5">n = 5</button>
-              <button class="pill" data-dim="10">n = 10</button>
-              <button class="pill" data-dim="20">n = 20</button>
-              <button class="pill" data-dim="50">n = 50</button>
-              <button class="pill" data-dim="100">n = 100</button>
-            </div>
-          </div>
-
-          <div class="control-box">
-            <label class="control-label">Select Basis Quality:</label>
-            <div class="toggle-group" id="basis-toggles">
-              <button class="toggle-btn active" data-basis="good">
-                <strong>Good Basis (Private Trapdoor)</strong>
-                <span>Orthogonal $(\gamma \approx 1.0)$</span>
-              </button>
-              <button class="toggle-btn" data-basis="bad">
-                <strong>Bad Basis (Public Key)</strong>
-                <span>Skewed Unimodular $(\gamma \to 0)$</span>
-              </button>
-            </div>
-          </div>
-        </div>
-
-        <!-- Action Row -->
-        <div class="action-row">
-          <div class="slider-box">
-            <div class="slider-header">
-              <span>Target Point Perturbation Noise:</span>
-              <span id="noise-val">&plusmn; 0.35</span>
-            </div>
-            <input type="range" id="noise-slider" min="0.10" max="0.48" step="0.02" value="0.35">
-          </div>
-          <button id="run-babai-btn" class="action-btn">▶ Run Babai CVP Solver</button>
-        </div>
-
-        <!-- Dynamic Results Display -->
-        <div class="results-grid">
-          <!-- Metrics Column -->
-          <div class="metrics-card">
-            <h3>Calculated Mathematical Metrics</h3>
-            <div class="metric-row">
-              <span class="m-label">Hadamard Ratio $\gamma(\mathbf{B})$:</span>
-              <span class="m-val" id="metric-hadamard">1.000</span>
-            </div>
-            <div class="metric-row">
-              <span class="m-label">Orthogonality Defect $\delta(\mathbf{B})$:</span>
-              <span class="m-val" id="metric-defect">1.000</span>
-            </div>
-            <div class="metric-row">
-              <span class="m-label">Mean Error Norm $\|\mathbf{v}_{\text{Babai}} - \mathbf{v}_{\text{true}}\|$:</span>
-              <span class="m-val" id="metric-error">0.000</span>
-            </div>
-            <div class="metric-row highlight">
-              <span class="m-label">Exact CVP Recovery:</span>
-              <span class="m-val status" id="metric-status">100.0% (SUCCESS)</span>
-            </div>
-          </div>
-
-          <!-- Live Coordinate Terminal / Canvas -->
-          <div class="terminal-card">
-            <div class="terminal-header">
-              <span>Live Vector Calculation Console</span>
-              <span class="term-dim" id="term-dim-tag">Dimension: 2D</span>
-            </div>
-            <div class="terminal-body" id="babai-terminal">
-              [System Ready] Click "Run Babai CVP Solver" to generate test target vectors and evaluate closest lattice points.
-            </div>
-          </div>
-        </div>
-
-        <!-- 2D Visualizer Canvas (shown when n=2) -->
-        <div id="canvas-container" class="canvas-box">
-          <div class="canvas-header">
-            <span>Interactive 2D Lattice Grid & Nearest Point Projection</span>
-            <span class="canvas-note">Click anywhere on grid to set custom target vector $\mathbf{t}$</span>
-          </div>
-          <canvas id="lattice-canvas" width="820" height="300"></canvas>
-        </div>
-
+      <div class="how-card">
+        <div class="step-circle">3</div>
+        <h3>Client Decrypts Result</h3>
+        <p>Only your device holds the private key to unlock the final classification prediction.</p>
       </div>
     </section>
 
-    <!-- ======================================================================
-         TAB 2: FUTURE SCOPE 2 (DEEP LEARNING & LWE)
-         ====================================================================== -->
-    <section id="tab-scope2" class="tab-content">
-      <div class="section-card">
-        <div class="card-header">
-          <div>
-            <h2>🤖 Scope 2: Deep Learning CVP Stress-Test & Verified LWE Pipeline</h2>
-            <p class="desc">Evaluating neural network failure boundaries on Voronoi cells ($n \uparrow 20$) and testing end-to-end LWE encryption.</p>
+    <!-- Main Live Interactive Tool -->
+    <section class="widget-card">
+      <h2>Live Private Inference Simulator</h2>
+      <p class="desc">Type any text query below and click "Run Private Inference" to see the encrypted pipeline execute in real time.</p>
+
+      <div class="input-row">
+        <input type="text" id="user-input" value="Patient exhibits acute chest pain and elevated cardiac biomarker levels.">
+        <button id="run-btn" class="action-btn">▶ Run Private Inference</button>
+      </div>
+
+      <!-- 4 Simple Pipeline Steps -->
+      <div class="flow-track">
+        <div class="flow-step" id="s-1">1. Encrypt Input</div>
+        <div class="flow-step" id="s-2">2. Server MatMul</div>
+        <div class="flow-step" id="s-3">3. Secure Non-Linear</div>
+        <div class="flow-step" id="s-4">4. Decrypt Result</div>
+      </div>
+
+      <!-- Side-by-Side: What Server Sees vs What You See -->
+      <div class="compare-box">
+        <div class="view-pane server">
+          <div class="view-pane-title">🔒 Cloud Server Memory State</div>
+          <div class="view-content" id="server-view">
+            Click "▶ Run Private Inference" above to execute.
           </div>
-          <span class="tag">Colab Verified (Gap B)</span>
         </div>
 
-        <!-- Two Column Deep Learning vs LWE -->
-        <div class="two-col-layout">
-
-          <!-- Left Column: Neural CVP Simulator -->
-          <div class="sub-card">
-            <h3>Part 1: PyTorch MLP on Voronoi Cells</h3>
-            <p class="sub-desc">Select dimension to observe exponential facet growth and neural accuracy degradation.</p>
-
-            <div class="control-box">
-              <label class="control-label">Test Dimension ($n$):</label>
-              <div class="pill-group" id="dl-dim-pills">
-                <button class="pill active" data-dldim="2">n = 2</button>
-                <button class="pill" data-dldim="4">n = 4</button>
-                <button class="pill" data-dldim="8">n = 8</button>
-                <button class="pill" data-dldim="12">n = 12</button>
-                <button class="pill" data-dldim="16">n = 16</button>
-                <button class="pill" data-dldim="20">n = 20</button>
-              </div>
-            </div>
-
-            <!-- Dynamic Voronoi & Neural Stats -->
-            <div class="dl-stats-box">
-              <div class="dl-stat">
-                <span class="label">Voronoi Facets $2(2^n - 1)$:</span>
-                <span class="val" id="dl-facets">6</span>
-              </div>
-              <div class="dl-stat">
-                <span class="label">MLP Recovery Accuracy:</span>
-                <span class="val highlight" id="dl-acc">98.8%</span>
-              </div>
-              <div class="dl-stat">
-                <span class="label">MSE Training Loss:</span>
-                <span class="val" id="dl-loss">0.003 (Converged)</span>
-              </div>
-            </div>
-
-            <!-- Accuracy Progress Bar -->
-            <div class="progress-wrap">
-              <div class="progress-info">
-                <span>Model Generalization:</span>
-                <span id="dl-status-text" style="color:#16a34a; font-weight:700;">Optimal (2D Linear)</span>
-              </div>
-              <div class="progress-bar">
-                <div class="progress-fill" id="dl-bar" style="width: 98.8%;"></div>
-              </div>
-            </div>
-
-            <div class="insight-box" id="dl-insight">
-              <strong>Theoretical Takeaway:</strong> In 2D, Voronoi cells have only 6 polyhedral boundaries which neural MLPs approximate easily.
-            </div>
+        <div class="view-pane client">
+          <div class="view-pane-title">👤 Client Decrypted Result</div>
+          <div class="view-content" id="client-view">
+            Decrypted result will appear here.
           </div>
+        </div>
+      </div>
 
-          <!-- Right Column: End-to-End LWE Cryptosystem -->
-          <div class="sub-card">
-            <h3>Part 2: Verified Regev LWE Encryption</h3>
-            <p class="sub-desc">Live simulation of Regev LWE $(n=8, q=97, \sigma=1.5)$ over 1,000-trial verified bounds.</p>
-
-            <div class="lwe-inputs">
-              <div class="input-item">
-                <label>Plaintext Message Bit ($m$):</label>
-                <select id="lwe-msg">
-                  <option value="1">Bit 1 (Encrypt m = 1)</option>
-                  <option value="0">Bit 0 (Encrypt m = 0)</option>
-                </select>
-              </div>
-              <div class="input-item">
-                <label>Noise Parameter ($\sigma$):</label>
-                <input type="range" id="lwe-sigma" min="0.5" max="3.0" step="0.5" value="1.5">
-                <span class="slider-caption">&sigma; = <span id="lwe-sig-val">1.5</span> (Threshold $q/4 = 24$)</span>
-              </div>
-            </div>
-
-            <button id="run-lwe-btn" class="action-btn secondary full">▶ Run LWE KeyGen &bull; Encrypt &bull; Decrypt</button>
-
-            <!-- LWE Pipeline Log -->
-            <div class="lwe-log" id="lwe-output-log">
-              <div class="log-line"><strong>[LWE Initialized]</strong> $n=8, m=32, q=97$.</div>
-              <div class="log-line">Click button above to execute full cryptographic cycle.</div>
-            </div>
-
-            <div class="status-banner success" id="lwe-status-badge">
-              ✔ 1,000-Message Trial: 100.0% Decryption Accuracy Verified
-            </div>
-          </div>
-
+      <!-- Simple Real Stats -->
+      <div class="stats-strip">
+        <div class="stat-item">
+          <div class="label">Inference Latency</div>
+          <div class="value" id="stat-speedup">--</div>
         </div>
       </div>
     </section>
 
-    <!-- ======================================================================
-         TAB 3: PRIVTI PROTOTYPE (PRIVACY-PRESERVING TRANSFORMER INFERENCE)
-         ====================================================================== -->
-    <section id="tab-privti" class="tab-content">
-      <div class="section-card">
-        <div class="card-header">
-          <div>
-            <h2>🔐 PrivTI: Privacy-Preserving Transformer Inference Simulator</h2>
-            <p class="desc">Live implementation of IEEE TSC 2026: Hybrid Lattice BFV Homomorphic Encryption + Secure 2PC.</p>
-          </div>
-          <span class="tag live">Interactive Prototype</span>
-        </div>
-
-        <!-- Preset Prompts -->
-        <div class="presets-row">
-          <span class="preset-label">Test Case Presets:</span>
-          <button class="preset-btn active" data-preset="med">🏥 Medical Diagnosis</button>
-          <button class="preset-btn" data-preset="fin">💳 Financial Audit</button>
-          <button class="preset-btn" data-preset="leg">⚖️ Legal Contract</button>
-          <button class="preset-btn" data-preset="custom">✏️ Custom Text</button>
-        </div>
-
-        <!-- Query Input -->
-        <div class="input-row">
-          <input type="text" id="privti-input" value="Patient exhibits acute chest pain and elevated cardiac biomarker levels.">
-          <button id="privti-run-btn" class="action-btn">▶ Run Secure Inference</button>
-        </div>
-
-        <!-- 4 Step Pipeline Track -->
-        <div class="flow-track">
-          <div class="flow-step" id="p-s1">
-            <span class="num">1</span>
-            <strong>Client Encrypts</strong>
-            <span class="sub">Ring-LWE BFV $(c_0, c_1)$</span>
-          </div>
-          <div class="flow-step" id="p-s2">
-            <span class="num">2</span>
-            <strong>Blind MatMul</strong>
-            <span class="sub">Homomorphic $Q, K, V$</span>
-          </div>
-          <div class="flow-step" id="p-s3">
-            <span class="num">3</span>
-            <strong>Secure 2PC</strong>
-            <span class="sub">Seg3GELU & Softmax</span>
-          </div>
-          <div class="flow-step" id="p-s4">
-            <span class="num">4</span>
-            <strong>Client Decrypts</strong>
-            <span class="sub">Private Key $sk=s$</span>
-          </div>
-        </div>
-
-        <!-- Side-by-Side View -->
-        <div class="compare-box">
-          <div class="view-pane server">
-            <div class="view-pane-title">
-              <span>🔒 Cloud Server Memory State (What Server Observes)</span>
-              <span class="status-dot">Blind Execution</span>
-            </div>
-            <div class="view-content" id="server-stream">
-              [Cloud Server Online]<br>
-              Awaiting encrypted token stream from client device...
-            </div>
-          </div>
-
-          <div class="view-pane client">
-            <div class="view-pane-title">
-              <span>👤 Client Local Terminal (Decrypted Prediction)</span>
-              <span class="status-dot verified">Decryption Verified</span>
-            </div>
-            <div class="view-content" id="client-stream">
-              [Client Device Ready]<br>
-              Click "Run Secure Inference" above to execute private Transformer prediction.
-            </div>
-          </div>
-        </div>
-
-        <!-- Real Stats Strip -->
-        <div class="stats-strip">
-          <div class="stat-item">
-            <div class="label">Inference Latency:</div>
-            <div class="value" id="stat-latency">--</div>
-            <div class="subtext">&sim; 6.3&times; speedup vs. pure MPC</div>
-          </div>
-          <div class="stat-item">
-            <div class="label">Token Slots Packed:</div>
-            <div class="value" id="stat-slots">-- / 8192</div>
-            <div class="subtext">SIMD slot parallelization</div>
-          </div>
-          <div class="stat-item">
-            <div class="label">Plaintext Match Fidelity:</div>
-            <div class="value green" id="stat-fidelity">100.0%</div>
-            <div class="subtext">Identical to unencrypted BERT</div>
-          </div>
-        </div>
-
-      </div>
-    </section>
-
-    <!-- Footer with Links -->
-    <footer class="app-footer">
-      <div class="footer-links">
-        <span><strong>Live Project Links:</strong></span>
-        <a href="https://privti-prototype.vercel.app" target="_blank">🌐 Vercel Live Deployment</a>
-        <a href="#" id="colab-modal-btn">📓 Google Colab Notebook</a>
-        <a href="https://doi.org/10.1109/TSC.2024.3496924" target="_blank">📄 PrivTI Paper (IEEE TSC 2026)</a>
-      </div>
-      <p class="copyright">&copy; 2026 Jashan Goyal, Nikhil Goyal, Paras Bansal &bull; Final Project Evaluation Suite</p>
+    <!-- Clean Footer -->
+    <footer class="footer">
+      <p>PrivTI — Practical Privacy-Preserving Transformer Inference Prototype</p>
     </footer>
 
   </div>

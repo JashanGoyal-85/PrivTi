@@ -289,65 +289,6 @@ body {
   margin-top: 2px;
 }
 
-/* Interactive Math Simulators */
-.math-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 16px;
-}
-
-.math-item {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 18px;
-}
-
-.math-item h3 {
-  font-size: 0.95rem;
-  font-weight: 700;
-  margin-bottom: 6px;
-}
-
-.math-item p {
-  font-size: 0.8rem;
-  color: var(--muted);
-  margin-bottom: 14px;
-}
-
-.slider-ctrl {
-  margin-bottom: 12px;
-}
-
-.slider-info {
-  display: flex;
-  justify-content: space-between;
-  font-size: 0.8rem;
-  font-weight: 600;
-  margin-bottom: 4px;
-}
-
-.slider-ctrl input {
-  width: 100%;
-  accent-color: var(--primary);
-  cursor: pointer;
-}
-
-.math-data-table {
-  width: 100%;
-  font-size: 0.8rem;
-}
-
-.math-data-table td {
-  padding: 4px 0;
-}
-
-.math-data-table td:last-child {
-  text-align: right;
-  font-family: var(--mono);
-  font-weight: 600;
-}
-
 /* Footer */
 .footer {
   text-align: center;
@@ -358,7 +299,7 @@ body {
 }
 
 @media (max-width: 700px) {
-  .how-it-works-grid, .flow-track, .compare-box, .stats-strip, .math-row {
+  .how-it-works-grid, .flow-track, .compare-box, .stats-strip {
     grid-template-columns: 1fr;
   }
 }

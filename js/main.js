@@ -174,8 +174,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
       // Update Dynamic Stats
       statSpeedup.textContent = `${analysis.latency}s`;
-      statTokens.textContent = `${analysis.tokens} Tokens (${analysis.tokens} / 8192 Slots)`;
-      statMatch.textContent = `${analysis.conf}%`;
+      if (statTokens) statTokens.textContent = `${analysis.tokens} Tokens (${analysis.tokens} / 8192 Slots)`;
+      if (statMatch) statMatch.textContent = `${analysis.conf}%`;
 
       runBtn.disabled = false;
       runBtn.textContent = '▶ Run Private Inference';
@@ -202,7 +202,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function updateGELU() {
     if (!gIn) return;
     const x = parseFloat(gIn.value);
-    gVal.textContent = x.toFixed(2);
+    if (gVal) gVal.textContent = x.toFixed(2);
 
     const exact = 0.5 * x * (1 + erf(x / Math.SQRT2));
     let approx = 0;
@@ -213,9 +213,9 @@ document.addEventListener('DOMContentLoaded', () => {
       approx = (-0.0001506671 * x8) + (0.0043702779 * x6) - (0.0512144957 * x4) + (0.3828738634 * x2) + (0.5 * x) + 0.0028445838;
     }
 
-    gExact.textContent = exact.toFixed(4);
-    gOur.textContent = approx.toFixed(4);
-    gErr.textContent = Math.abs(approx - exact).toExponential(2);
+    if (gExact) gExact.textContent = exact.toFixed(4);
+    if (gOur) gOur.textContent = approx.toFixed(4);
+    if (gErr) gErr.textContent = Math.abs(approx - exact).toExponential(2);
   }
 
   if (gIn) {
@@ -233,7 +233,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function updateExp() {
     if (!eIn) return;
     const x = parseFloat(eIn.value);
-    eVal.textContent = x.toFixed(2);
+    if (eVal) eVal.textContent = x.toFixed(2);
 
     const exact = Math.exp(x);
     const x_int = Math.floor(x);
@@ -245,9 +245,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const approx = eint * efrac;
 
-    eExact.textContent = exact.toFixed(4);
-    eOur.textContent = approx.toFixed(4);
-    eErr.textContent = Math.abs(approx - exact).toExponential(2);
+    if (eExact) eExact.textContent = exact.toFixed(4);
+    if (eOur) eOur.textContent = approx.toFixed(4);
+    if (eErr) eErr.textContent = Math.abs(approx - exact).toExponential(2);
   }
 
   if (eIn) {
